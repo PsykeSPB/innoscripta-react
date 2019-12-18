@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  app:
+    image: node:alpine
+    working_dir: /home/app
+    volumes:
+      - .:/home/app
+    ports:
+      - 8080:8080
+    command: ["yarn", "serve"]
