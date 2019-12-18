@@ -1,11 +1,12 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Menu from "./views/Menu";
 
 export default function App() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <div>This is now material-ui React + Redux App!</div>
+      <Menu></Menu>
     </React.Fragment>
   );
 }
