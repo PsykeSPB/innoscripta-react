@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   img: {
     width: 180,
@@ -31,7 +32,7 @@ export default function ProductCard(props) {
             </Grid>
             <Grid item>
               <Typography variant="h6" component="div">
-                ${props.price}
+                €{props.price}
               </Typography>
             </Grid>
           </Grid>

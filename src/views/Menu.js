@@ -1,10 +1,79 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import Axios from "../plugins/axios";
+import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import OrderCard from "../components/OrderCard";
 import Cart from "../components/Cart";
 
-const useStyles = makeStyles(theme => ({
+class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      items: [],
+    };
+  }
+
+  componentDidMount() {
+    this.fetch();
+  }
+
+  render() {
+    const styles = this.props.classes;
+    const loading = (
+      <div className={styles.loadingWrapper}>
+        <CircularProgress color="primary" />
+      </div>
+    );
+    const list = this.state.items.map(
+      ({ id, name, description, img_url, price }) => {
+        return (
+          <OrderCard
+            key={id}
+            id={id}
+            heading={name}
+            description={description}
+            imgSrc={img_url}
+            price={price}
+          />
+        );
+      }
+    );
+
+    return (
+      <div className={styles.menu}>
+        <div className={styles.content}>
+          {this.state.isLoading ? loading : list}
+        </div>
+        <Drawer
+          className={styles.drawer}
+          classes={{ paper: styles.drawerPaper }}
+          anchor="right"
+          variant="permanent"
+        >
+          <Cart />
+        </Drawer>
+      </div>
+    );
+  }
+
+  fetch() {
+    this.setState({ isLoading: true });
+    Axios.get("/products")
+      .then(({ data }) => {
+        this.setState({ items: data.data });
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
+  }
+}
+
+export default withStyles(theme => ({
   menu: {
     display: "flex",
   },
@@ -19,37 +88,11 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-}));
-
-export default function Menu() {
-  const styles = useStyles();
-
-  return (
-    <div className={styles.menu}>
-      <div className={styles.content}>
-        <OrderCard
-          id={12352}
-          imgSrc="https://cdn3.iconfinder.com/data/icons/fastfood-13/64/Pizza-fastfood-food-cheese_-512.png"
-          heading="Pizza 1"
-          price="5.25"
-          description="Tasty pizza!"
-        />
-        <OrderCard
-          id={896481}
-          imgSrc="https://cdn3.iconfinder.com/data/icons/fastfood-13/64/Pizza-fastfood-food-cheese_-512.png"
-          heading="Pizza 2"
-          price="7.14"
-          description="Another Tasty pizza!"
-        />
-      </div>
-      <Drawer
-        className={styles.drawer}
-        classes={{ paper: styles.drawerPaper }}
-        anchor="right"
-        variant="permanent"
-      >
-        <Cart />
-      </Drawer>
-    </div>
-  );
-}
+  loadingWrapper: {
+    display: "flex",
+    width: "100%",
+    height: "90vh",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+}))(Menu);
