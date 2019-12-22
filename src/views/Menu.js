@@ -4,7 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import OrderCard from "../components/OrderCard";
-import Cart from "../components/Cart";
+import OrderDataWrapper from "../components/OrderDataWrapper";
+import OrderMini from "../components/OrderMini";
 
 class Menu extends React.Component {
   constructor(props) {
@@ -52,7 +53,9 @@ class Menu extends React.Component {
           anchor="right"
           variant="permanent"
         >
-          <Cart />
+          <OrderDataWrapper>
+            <OrderMini />
+          </OrderDataWrapper>
         </Drawer>
       </div>
     );
@@ -78,11 +81,13 @@ export default withStyles(theme => ({
     display: "flex",
   },
   drawer: {
-    width: 320,
+    width: "25vw",
+    minWidth: 320,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: 320,
+    width: "25vw",
+    minWidth: 320,
   },
   content: {
     flexGrow: 1,
