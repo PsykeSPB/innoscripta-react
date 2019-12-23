@@ -16,12 +16,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProductCard(props) {
-  const cls = useStyles();
+  const styles = useStyles();
   return (
-    <Paper className={cls.paper}>
+    <Paper className={styles.paper}>
       <Grid container spacing={2} alignItems="stretch">
         <Grid item>
-          <img className={cls.img} src={props.imgSrc} />
+          <img className={styles.img} src={props.imgSrc} />
         </Grid>
         <Grid item xs container direction="column">
           <Grid item container>

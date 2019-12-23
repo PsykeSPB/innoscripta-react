@@ -81,13 +81,13 @@ export default withStyles(theme => ({
     display: "flex",
   },
   drawer: {
-    width: "25vw",
-    minWidth: 320,
+    width: "30vw",
+    minWidth: 380,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: "25vw",
-    minWidth: 320,
+    width: "30vw",
+    minWidth: 380,
   },
   content: {
     flexGrow: 1,
