@@ -4,8 +4,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": "13.5.0",
+    "yarn": "1.21.x"
+  },
   "scripts": {
     "start": "node index.js",
+    "heroku-prebuild": "yarn install --production=false",
     "build": "webpack --config webpack.prod.config.js",
     "serve": "webpack-dev-server --config webpack.dev.config.js"
   },
