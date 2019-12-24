@@ -53,6 +53,7 @@ class Menu extends React.Component {
           anchor="right"
           variant="permanent"
         >
+          <div className={styles.toolbar}></div>
           <ConnectedOrderPreview heading="Your cart:" minified>
             <Button
               component={Link}
@@ -87,6 +88,7 @@ export default withStyles(theme => ({
   menu: {
     display: "flex",
   },
+  toolbar: theme.mixins.toolbar,
   drawer: {
     width: "30vw",
     minWidth: 380,

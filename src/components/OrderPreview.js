@@ -88,7 +88,7 @@ class OrderPreview extends React.Component {
             {renderServices}
             {renderTotals}
             <Grid item container justify="flex-end" className={styles.action}>
-              {this.props.children}
+              {this.props.products.length > 0 ? this.props.children : null}
             </Grid>
           </Grid>
         </Paper>
