@@ -8,6 +8,24 @@ export default function cart(state = {}, action) {
             ? state[action.id] + action.quantity
             : action.quantity,
       };
+    case "EXTRACT_FROM_CART":
+      if (action.id in state) {
+        return {
+          ...state,
+          [action.id]:
+            state[action.id] - action.quantity > 0
+              ? state[action.id] - action.quantity
+              : 1,
+        };
+      }
+      return state;
+    case "REMOVE_FROM_CART":
+      if (action.id in state) {
+        const res = { ...state };
+        delete res[action.id];
+        return res;
+      }
+      return state;
     default:
       return state;
   }

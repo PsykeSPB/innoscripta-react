@@ -26,7 +26,7 @@ class Hover extends React.Component {
       >
         <Box className={styles.content}>{this.props.children}</Box>
         {this.state.isHover ? (
-          <Box className={`${styles.overlay} ${styles[this.props.position]}`}>
+          <Box className={`${styles.hoverable} ${styles[this.props.position]}`}>
             {this.props.overlay}
           </Box>
         ) : null}
@@ -40,7 +40,7 @@ export default withStyles(theme => ({
     width: "100%",
     position: "relative",
   },
-  overlay: {
+  hoverable: {
     position: "absolute",
     zIndex: 2,
   },

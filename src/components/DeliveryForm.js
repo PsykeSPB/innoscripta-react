@@ -93,6 +93,7 @@ class DeliveryForm extends React.Component {
                 helperText={
                   this.state.errors.phone ? this.state.errors.phone : ""
                 }
+                defaultValue={this.props.phone}
                 onBlur={this.handlePhone}
                 fullWidth
               ></TextField>
@@ -106,6 +107,7 @@ class DeliveryForm extends React.Component {
                 helperText={
                   this.state.errors.address ? this.state.errors.address : ""
                 }
+                defaultValue={this.props.address}
                 onBlur={this.handleAddress}
                 fullWidth
               ></TextField>
@@ -116,6 +118,7 @@ class DeliveryForm extends React.Component {
                 multiline
                 rows="4"
                 variant="outlined"
+                defaultValue={this.props.comment}
                 onBlur={this.handleComment}
                 fullWidth
               />
@@ -128,7 +131,7 @@ class DeliveryForm extends React.Component {
               </Grid>
               <Grid item className={styles.action}>
                 <Button
-                  onClick={this.props.onSubmit}
+                  onClick={() => this.props.onSubmit(this.state)}
                   disabled={this.isSubmitDisabled()}
                   color="primary"
                   variant="contained"

@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
   },
   img: {
     width: 180,
@@ -15,28 +14,46 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const useStylesMini = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(1),
+  },
+  imgWrapper: {
+    display: "none",
+  },
+  descWrapper: {
+    display: "none",
+  },
+}));
+
 export default function ProductCard(props) {
-  const styles = useStyles();
+  const styles = props.minified ? useStylesMini() : useStyles();
   return (
-    <Paper className={styles.paper}>
+    <Paper className={styles.paper} elevation={props.minified ? 0 : 1}>
       <Grid container spacing={2} alignItems="stretch">
-        <Grid item>
+        <Grid item className={styles.imgWrapper}>
           <img className={styles.img} src={props.imgSrc} />
         </Grid>
         <Grid item xs container direction="column">
           <Grid item container>
             <Grid item xs>
-              <Typography variant="h6" component="div">
+              <Typography
+                variant={props.minified ? "subtitle2" : "h6"}
+                component="div"
+              >
                 {props.heading}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="h6" component="div">
+              <Typography
+                variant={props.minified ? "subtitle2" : "h6"}
+                component="div"
+              >
                 €{props.price}
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs>
+          <Grid item xs className={styles.descWrapper}>
             <Typography variant="body1">{props.description}</Typography>
           </Grid>
           <Grid item container justify="flex-end">

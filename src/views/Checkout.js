@@ -1,16 +1,17 @@
 import React from "react";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import DeliveryForm from "../components/DeliveryForm";
+import { Stepper, Step, StepLabel, Button, Box } from "@material-ui/core";
+import ConnectedOrderPreview from "../components/ConnectedOrderPreview";
+import ConnectedDeliveryForm from "../components/ConnectedDeliveryForm";
+import ConnectedSubmitOrder from "../components/ConnectedSubmitOrder";
+import SuccessModal from "../components/SuccessModal";
 
 class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeStep: 0,
+      isSuccess: false,
+      orderId: "",
     };
   }
 
@@ -26,10 +27,44 @@ class Checkout extends React.Component {
     }
   };
 
+  handleSuccess = payload => {
+    this.setState({
+      isSuccess: true,
+      orderId: payload.id,
+    });
+  };
+
+  handleError = payload => {
+    console.error(payload);
+  };
+
   render() {
-    const renderCartConfirm = <div>Cart confirmation</div>;
-    const renderDeliveryForm = <DeliveryForm></DeliveryForm>;
-    const renderSubmitForm = <div>Submit order Form</div>;
+    const renderCartConfirm = (
+      <ConnectedOrderPreview heading="Confirm your cart">
+        <Button color="primary" onClick={this.handleNext} variant="contained">
+          Next
+        </Button>
+      </ConnectedOrderPreview>
+    );
+    const renderDeliveryForm = (
+      <ConnectedDeliveryForm
+        onCancel={this.handelReturn}
+        onSubmit={this.handleNext}
+      />
+    );
+    const renderSubmitForm = (
+      <ConnectedOrderPreview heading="Submit your order">
+        <Button onClick={this.handelReturn} variant="contained">
+          Return
+        </Button>
+        <Box ml={2}>
+          <ConnectedSubmitOrder
+            onSuccess={this.handleSuccess}
+            onError={this.handleError}
+          />
+        </Box>
+      </ConnectedOrderPreview>
+    );
 
     const renderBody = i => {
       switch (i) {
@@ -46,16 +81,21 @@ class Checkout extends React.Component {
       <div>
         <Stepper activeStep={this.state.activeStep} alternativeLabel>
           <Step>
-            <StepLabel>Confirm your cart</StepLabel>
+            <StepLabel>Confirm cart</StepLabel>
           </Step>
           <Step>
             <StepLabel>Add delivery info</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Confirm order</StepLabel>
+            <StepLabel>Submit order</StepLabel>
           </Step>
         </Stepper>
-        {renderBody(this.state.activeStep)}
+        <Box m={3}>{renderBody(this.state.activeStep)}</Box>
+        <SuccessModal
+          open={this.state.isSuccess}
+          id={this.state.orderId}
+          onClose={() => null}
+        />
       </div>
     );
   }

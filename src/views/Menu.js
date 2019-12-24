@@ -1,11 +1,10 @@
 import React from "react";
 import Axios from "../plugins/axios";
 import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { Drawer, CircularProgress, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import OrderCard from "../components/OrderCard";
-import OrderDataWrapper from "../components/OrderDataWrapper";
-import OrderMini from "../components/OrderMini";
+import ConnectedOrderPreview from "../components/ConnectedOrderPreview";
 
 class Menu extends React.Component {
   constructor(props) {
@@ -30,14 +29,15 @@ class Menu extends React.Component {
     const list = this.state.items.map(
       ({ id, name, description, img_url, price }) => {
         return (
-          <OrderCard
-            key={id}
-            id={id}
-            heading={name}
-            description={description}
-            imgSrc={img_url}
-            price={price}
-          />
+          <div className={styles.listItem} key={id}>
+            <OrderCard
+              id={id}
+              heading={name}
+              description={description}
+              imgSrc={img_url}
+              price={price}
+            />
+          </div>
         );
       }
     );
@@ -53,9 +53,16 @@ class Menu extends React.Component {
           anchor="right"
           variant="permanent"
         >
-          <OrderDataWrapper>
-            <OrderMini />
-          </OrderDataWrapper>
+          <ConnectedOrderPreview heading="Your cart:" minified>
+            <Button
+              component={Link}
+              to="/checkout"
+              color="primary"
+              variant="contained"
+            >
+              Continue
+            </Button>
+          </ConnectedOrderPreview>
         </Drawer>
       </div>
     );
@@ -99,5 +106,8 @@ export default withStyles(theme => ({
     height: "90vh",
     alignItems: "center",
     justifyContent: "center",
+  },
+  listItem: {
+    marginBottom: theme.spacing(2),
   },
 }))(Menu);
